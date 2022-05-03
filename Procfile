@@ -1,0 +1,1 @@
+web: gunicorn lobbychessserver.lobbychessserver.wsgi --log-file -
