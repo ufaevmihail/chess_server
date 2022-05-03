@@ -1,1 +1,1 @@
-web: gunicorn lobbychessserver.lobbychessserver.wsgi --log-file -
+web: gunicorn lobbychessserver.wsgi --log-file -
