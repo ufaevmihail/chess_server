@@ -1,1 +1,3 @@
-web: gunicorn lobbychessserver.wsgi --log-file -
+web: gunicorn lobbychessserver.wsgi:application --log-file - --log-level debug
+python manage.py collectstatic --noinput
+manage.py migrate
