@@ -1,1 +1,1 @@
-web: gunicorn lobbychessserver.wsgi:application --log-file - --log-level debug
+web: daphne lobbychessserver.asgi:application --port $PORT --bind 0.0.0.0
