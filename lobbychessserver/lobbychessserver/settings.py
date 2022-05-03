@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,10 +51,10 @@ CSRF_COOKIE_HTTPONLY = False
 CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
 CORS_ALLOW_CREDENTIALS = True
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-j64lmj!22x9709@-8y2eawo%0(eyte6u-7hvu&7lpm_m6!z1jx'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','django-insecure-j64lmj!22x9709@-8y2eawo%0(eyte6u-7hvu&7lpm_m6!z1jx')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
 
 ALLOWED_HOSTS = []
 
