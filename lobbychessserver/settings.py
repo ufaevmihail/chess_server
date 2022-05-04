@@ -35,8 +35,8 @@ CORS_ALLOW_HEADERS = (
         'Access-Control-Allow-Private-Network',
         'Access-Control-Allow-Origin',
     )
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000','https://mychessapplication.herokuapp.com','.mychessapplication.herokuapp.com']
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000','https://mychessapplication.herokuapp.com','.mychessapplication.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000','https://mychessapplication.herokuapp.com','http://mychessapplication.herokuapp.com']
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000','https://mychessapplication.herokuapp.com','http://mychessapplication.herokuapp.com']
 CSRF_COOKIE_NAME = 'XSRF-TOKEN'
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True

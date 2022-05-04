@@ -2,7 +2,10 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from .sockets_deals import games, test1
 import threading
-
+import time
+def test2(ws):
+    time.sleep(1)
+    ws.send(json.dumps({'type': 'on_open'}))
 class GameConsumer(WebsocketConsumer):
     game=None
     identifier=None
@@ -11,8 +14,10 @@ class GameConsumer(WebsocketConsumer):
         try:
             self.game = games[int(self.scope['url_route']['kwargs']['game_id'])]
             self.accept()
-            self.send(json.dumps({'type': 'on_open'}))
-            print('ya tut')
+            #self.send(json.dumps({'type': 'on_open'}))
+            #print('ya tut')
+            my_thread = threading.Thread(target=test2, args=(self,))
+            my_thread.start()
         except:
             self.close()
 
