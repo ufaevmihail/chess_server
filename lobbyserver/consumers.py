@@ -11,6 +11,8 @@ class GameConsumer(WebsocketConsumer):
         try:
             self.game = games[int(self.scope['url_route']['kwargs']['game_id'])]
             self.accept()
+            self.send(json.dumps({'type': 'on_open'}))
+            print('ya tut')
         except:
             self.close()
 
