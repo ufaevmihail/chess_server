@@ -5,11 +5,15 @@ from .my_api import *
 from .sockets_deals import create_game,joinGame
 from django.views.decorators.csrf import ensure_csrf_cookie,csrf_exempt,requires_csrf_token
 from django.http import HttpResponse
+from django.middleware.csrf import get_token
 import json
 # Create your views here.
 @ensure_csrf_cookie
 def get_csrf_token(request):
-    resp = JsonResponse({'csrfToken': request.COOKIES['XSRF-TOKEN']})
+    print(request.COOKIES)
+    csrf_token = get_token(request)
+    #resp = JsonResponse({'csrfToken': request.COOKIES['XSRF-TOKEN']})
+    resp = JsonResponse({'csrfToken': csrf_token})
     return resp
 
 @jwt_required
