@@ -65,7 +65,8 @@ class State:
                         self.board[field.px][field.py]=None
                 if field and field.type=='figure':
                     field.cantogofields=[]
-
+        for king in self.kings:
+            king.rokerate=True
         self.turn+=1
         #print('---------------------------')
         #for line in self.board:
@@ -85,8 +86,6 @@ class State:
             figure.turnrule()
             enemyfigurescantattackourking(figure)
             if len(figure.cantogofields)!=0:
-                print(f'{figure.name} : {figure.px}, {figure.py}')
-
                 checkmat=False
                 draw=False
                 break
@@ -178,6 +177,9 @@ class SledPeshki:
         self.peshka.state.figures[self.team].remove(self.peshka)
 
 class King(Figure):
+    def __init__(self,name,px,py,team,board,turnlist,state):
+        super().__init__(name,px,py,team,board,turnlist,state)
+        rokerate=True
     def make_move(self,px,py,tl=True):
         pred_px=self.px
         super().make_move(px,py)
@@ -234,6 +236,7 @@ def enemyfigurescantattackourking(this):
                     #break не надо этого делать
             ourking = this.state.kings[this.team]
             if (ourking.px,ourking.py) in figure.cantogofields:
+                this.state.kings[this.team].rokerate=False
                 if fld != (figure.px,figure.py) and this.name != 'king':
                     this.cantogofields.remove(fld)
                    # break
@@ -274,7 +277,7 @@ def kingrule(this):
                     this.cantogofields.append((this.px+i,this.py+j))
     rokerate(this)
 def rokerate(king):
-    if king.firstmove:
+    if king.firstmove and king.state.kings[(king.team+1)%2].rokerate:
         #print(king.state.rooks[king.team].__dict__)
         for rook in king.state.rooks[king.team]:
             if rook.firstmove:
