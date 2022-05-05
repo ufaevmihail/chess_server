@@ -85,6 +85,8 @@ class State:
             figure.turnrule()
             enemyfigurescantattackourking(figure)
             if len(figure.cantogofields)!=0:
+                print(f'{figure.name} : {figure.px}, {figure.py}')
+
                 checkmat=False
                 draw=False
                 break

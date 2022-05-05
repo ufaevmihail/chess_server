@@ -4,7 +4,7 @@ from .sockets_deals import games, test1
 import threading
 import time
 def test2(ws):
-    time.sleep(1)
+    time.sleep(0.5)
     ws.send(json.dumps({'type': 'on_open'}))
 class GameConsumer(WebsocketConsumer):
     game=None
