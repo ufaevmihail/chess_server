@@ -179,7 +179,7 @@ class SledPeshki:
 class King(Figure):
     def __init__(self,name,px,py,team,board,turnlist,state):
         super().__init__(name,px,py,team,board,turnlist,state)
-        rokerate=True
+        self.rokerate=True
     def make_move(self,px,py,tl=True):
         pred_px=self.px
         super().make_move(px,py)
