@@ -65,7 +65,7 @@ class State:
                         self.board[field.px][field.py]=None
                 if field and field.type=='figure':
                     field.cantogofields=[]
-        for king in self.kings:
+        for key,king in self.kings.items():
             king.rokerate=True
         self.turn+=1
         #print('---------------------------')
