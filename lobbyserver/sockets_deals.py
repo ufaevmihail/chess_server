@@ -181,5 +181,9 @@ class gameDict(dict):
     def __setitem__(self,key,value):
         super().__setitem__(key,value)
         print(f'game {key} hosted')
-
+        #something goes here
+    def pop(self,key,f=None):
+        super().pop(key,f)
+        print(f'game {key} unhosted')
+        #something goes here
 games=gameDict()
