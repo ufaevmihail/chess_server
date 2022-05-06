@@ -58,7 +58,7 @@ class Game:
             value.close()
         if self in games.values():
             print(f'closed {self.id}')
-            games.pop(self.id)
+            games.pop(self.id,None)
 
     def condition_to_end(self):
         if not self.players or self.state.endgame:
@@ -177,6 +177,9 @@ class FreeGame(Game):
         self.players={}
         self.events = [("connection",self.on_connection),("move",self.on_move),('chat_mess',self.on_chat_message)]
 
-#{id:game()}
-#games={1:FreeGame()}
-games={}
+class gameDict(dict):
+    def __setitem__(self,key,value):
+        super().__setitem__(key,value)
+        print(f'game {key} hosted')
+
+games=gameDict()
