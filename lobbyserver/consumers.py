@@ -1,6 +1,7 @@
 import json
 from channels.generic.websocket import WebsocketConsumer
 from .sockets_deals import games, test1
+from .menu import main_menu
 import threading
 import time
 def test2(ws):
