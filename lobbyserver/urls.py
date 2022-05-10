@@ -16,14 +16,14 @@ urlpatterns = [
     path('exist_email/',registration_views.same_email_req),
     path('auth/',registration_views.authorisation)
 ]
-print('url')
-'''
+#print('url')
+
 import threading
 import time
 def make_req():
+    time.sleep(2)
     while True:
-        time.sleep(3)
         print('ya rabotau')
+        time.sleep(3)
 
 threading.Thread(target=make_req).start()
-'''
