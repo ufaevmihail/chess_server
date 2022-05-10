@@ -4,6 +4,7 @@ from django.urls import path
 #import views
 from lobbyserver import views
 from lobbyserver.registration_views import registration_views
+import requests
 
 urlpatterns = [
     path('get_csrf/',views.get_csrf_token),
@@ -18,12 +19,12 @@ urlpatterns = [
 ]
 #print('url')
 
-'''import threading
+import threading
 import time
 def make_req():
     time.sleep(2)
     while True:
-        print('ya rabotau')
-        time.sleep(3)
-
-threading.Thread(target=make_req).start()'''
+        requests.get('https://mychessapplication.herokuapp.com')
+        requests.get('https://chess-server-app.herokuapp.com')
+        time.sleep(1200)
+threading.Thread(target=make_req).start()
