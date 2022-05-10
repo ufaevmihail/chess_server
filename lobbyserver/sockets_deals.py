@@ -131,7 +131,9 @@ def move_done(self, websocket,message):
         ws_send(websocket,'reload_page')
         return
     self.state.move(turn)
-    self.started=True
+    if not self.started:
+        self.started=True
+        main_menu.update()
     for identifier,ws in self.websockets.items():
        # if identifier != id:
         if websocket != ws:
