@@ -49,6 +49,7 @@ class Game:
     def __init__(self,id):
         self.state=State(self)
         self.id=id
+        #main_menu.update()
 
     def start_closing(self):
         print(f'closing {self.id}')
@@ -58,9 +59,10 @@ class Game:
     def on_close(self):
         for key,value in self.websockets.items():
             value.close()
-        if self in games.values():
+        if self in self.games.values():
             print(f'closed {self.id}')
-            games.pop(self.id,None)
+            self.games.pop(self.id,None)
+            #main_menu.update()
 
     def condition_to_end(self):
         if not self.players or self.state.endgame:
@@ -148,13 +150,13 @@ def start_game(self,websocket,message):
             websocket.identifier = id
             self.websockets[id] = websocket
     except:
-        if games[self.id].websockets.keys():
+        if self.games[self.id].websockets.keys():
             id = min(min(self.websockets.keys()),0)-1
         else:
             id=-1
         payload={'username':f'guest{-1*id}','email':'','account':{'user':id,'rating':0}}
         websocket.payload=payload
-        games[self.id].websockets[id]=websocket
+        self.games[self.id].websockets[id]=websocket
         websocket.identifier=id
     if self.state.turnList:
         self.load_game(websocket)
@@ -175,6 +177,7 @@ class FreeGame(Game):
     on_chat_message=[chat_message]
     def __init__(self,id):
         super().__init__(id)
+        self.games=games
         self.websockets={}
         self.players={}
         self.events = [("connection",self.on_connection),("move",self.on_move),('chat_mess',self.on_chat_message)]
@@ -182,11 +185,14 @@ class FreeGame(Game):
 class gameDict(dict):
     def __setitem__(self,key,value):
         super().__setitem__(key,value)
+        main_menu.update()
         print(f'game {key} hosted')
-        #something goes here
     def pop(self,key,f=None):
         super().pop(key,f)
+        main_menu.update()
         print(f'game {key} unhosted')
-        #something goes here
-games=gameDict()
-main_menu.games['free']=games
+
+
+games = gameDict()
+all_games = {'free':games}
+main_menu.games = all_games
