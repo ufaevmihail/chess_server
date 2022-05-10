@@ -7,6 +7,8 @@ import json
 from lobbychessserver.settings import SECRET_KEY
 import jwt
 from .game_state import State
+from .menu import main_menu
+
 django.setup()
 
 
@@ -187,3 +189,4 @@ class gameDict(dict):
         print(f'game {key} unhosted')
         #something goes here
 games=gameDict()
+main_menu.games['free']=games
