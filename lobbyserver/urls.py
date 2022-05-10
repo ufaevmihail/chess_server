@@ -18,7 +18,7 @@ urlpatterns = [
 ]
 #print('url')
 
-import threading
+'''import threading
 import time
 def make_req():
     time.sleep(2)
@@ -26,4 +26,4 @@ def make_req():
         print('ya rabotau')
         time.sleep(3)
 
-threading.Thread(target=make_req).start()
+threading.Thread(target=make_req).start()'''
