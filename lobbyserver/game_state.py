@@ -55,7 +55,7 @@ class State:
     def move(self,turn):
         startx,starty = tuple(turn['startfield'])
         endx,endy=tuple(turn['endfield'])
-        #if validate(startx,starty,endx,endy):
+        #if self.validate(startx,starty,endx,endy):
         self.board[startx][starty].make_move(endx,endy)
         self.check_matt_or_draw()
         for str in self.board:

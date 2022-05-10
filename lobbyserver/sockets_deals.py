@@ -2,7 +2,6 @@
 import threading
 import time
 import django
-import websockets
 import json
 from lobbychessserver.settings import SECRET_KEY
 import jwt
@@ -49,6 +48,7 @@ class Game:
     def __init__(self,id):
         self.state=State(self)
         self.id=id
+        self.started=False
         #main_menu.update()
 
     def start_closing(self):
@@ -131,6 +131,7 @@ def move_done(self, websocket,message):
         ws_send(websocket,'reload_page')
         return
     self.state.move(turn)
+    self.started=True
     for identifier,ws in self.websockets.items():
        # if identifier != id:
         if websocket != ws:
