@@ -15,7 +15,7 @@ class Menu:
                 if game.started:
                     games[key]['started']=game.id
                 else:
-                    game[key]['notstarted']=game.id
+                    games[key]['notstarted']=game.id
         for ws in self.websockets:
             ws.send(json.dumps({'games':games}))
 
