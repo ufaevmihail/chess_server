@@ -13,9 +13,9 @@ class Menu:
             games[key]={'started':{},'notstarted':{}}
             for id,game in gamedicts.items():
                 if game.started:
-                    games[key]['started']=game.id
+                    games[key]['started']={game.id:game.get_players_payloads()}
                 else:
-                    games[key]['notstarted']=game.id
+                    games[key]['notstarted']={game.id:game.get_players_payloads()}
         for ws in self.websockets:
             ws.send(json.dumps({'games':games}))
 

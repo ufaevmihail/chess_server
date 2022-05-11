@@ -115,6 +115,7 @@ class Game:
             self.players[id] = websocket
             ws_send(websocket, *data_to_send)
             self.on_player_joined()
+            main_menu.update()
             return True
 def chat_message(self,websocket,message):
     for identifier, ws in self.websockets.items():
