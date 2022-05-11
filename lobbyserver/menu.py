@@ -11,7 +11,7 @@ class Menu:
         games={}
         for key,gamedicts in self.games.items():
             games[key]={'started':{},'notstarted':{}}
-            for id,game in gamedicts.values():
+            for id,game in gamedicts.items():
                 if game.started:
                     games[key]['started']=game.id
                 else:
