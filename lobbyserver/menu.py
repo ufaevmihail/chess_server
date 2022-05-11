@@ -9,9 +9,9 @@ class Menu:
 
     def update(self):
         games={}
-        for key,gamedicts in self.games:
+        for key,gamedicts in self.games.items():
             games[key]={'started':{},'notstarted':{}}
-            for id,game in gamedicts:
+            for id,game in gamedicts.values():
                 if game.started:
                     games[key]['started']=game.id
                 else:
