@@ -7,6 +7,16 @@ import time
 def test2(ws):
     time.sleep(0.5)
     ws.send(json.dumps({'type': 'on_open'}))
+
+
+class MenuConsumer(WebsocketConsumer):
+
+    def connect(self):
+        main_menu.handler(self)
+        self.accept()
+    def disconnect(self,close_code):
+        main_menu.websockets.remove(self)
+
 class GameConsumer(WebsocketConsumer):
     game=None
     identifier=None
