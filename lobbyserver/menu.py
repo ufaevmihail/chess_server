@@ -1,5 +1,6 @@
 #from .sockets_deals import games
 import json
+
 class Menu:
     def __init__(self):
         self.games={'free':{}}
@@ -16,7 +17,6 @@ class Menu:
                     games[key]['started']={game.id:game.get_players_payloads2()}
                 else:
                     games[key]['notstarted']={game.id:game.get_players_payloads2()}
-        print(json.dumps({'games':games})) #################################
         for ws in self.websockets:
             ws.send(json.dumps({'games':games}))
 

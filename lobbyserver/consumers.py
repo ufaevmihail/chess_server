@@ -14,6 +14,8 @@ class MenuConsumer(WebsocketConsumer):
     def connect(self):
         main_menu.handler(self)
         self.accept()
+        my_thread = threading.Thread(target=test2, args=(self,))
+        my_thread.start()
     def disconnect(self,close_code):
         main_menu.websockets.remove(self)
 
