@@ -10,12 +10,14 @@ class Menu:
     def make_games_dict(self):
         games = {}
         for key, gamedicts in self.games.items():
-            games[key] = {'started': {}, 'notstarted': {}}
+            games[key] = {'started': [], 'notstarted': []}
             for id, game in gamedicts.items():
+                games[key]['started']=[]
+                games[key]['notstarted']=[]
                 if game.started:
-                    games[key]['started'] = {game.id: game.get_players_payloads2()}
+                    games[key]['started'].append([id,game.get_players_payloads2()])
                 else:
-                    games[key]['notstarted'] = {game.id: game.get_players_payloads2()}
+                    games[key]['notstarted'].append([id,game.get_players_payloads2()])
         return games
     def update(self):
         games=self.make_games_dict()
