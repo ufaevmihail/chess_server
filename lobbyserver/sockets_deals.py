@@ -155,7 +155,8 @@ def start_game(self,websocket,message):
             websocket.identifier=id
             self.websockets[id] = websocket
         else:
-            id = str(id)+'clone'
+            while id in self.websockets:
+                id = str(id)+'clone'
             websocket.identifier = id
             self.websockets[id] = websocket
     except:
