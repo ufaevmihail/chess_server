@@ -104,7 +104,7 @@ class Game:
         if self.id_in_players(websocket,1,1,['loadgame', 'ok', websocket.payload, {'team': 1,'figs':self.state.get_loaded_state()}]):
             return
         else:
-            ws_send(websocket, 'loadgame', 'viewer', {'figs':self.state.get_loaded_state()})
+            ws_send(websocket, 'loadgame', 'viewer',websocket.payload, {'figs':self.state.get_loaded_state()})
     def new_game(self, websocket):
         if self.id_in_players(websocket,0,0,['startgame', 'ok', websocket.payload, {'team': 0}]):
             return
