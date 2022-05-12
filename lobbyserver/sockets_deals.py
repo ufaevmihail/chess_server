@@ -90,6 +90,11 @@ class Game:
         for key,value in self.players.items():
             dict[key]=value.payload
         return dict
+    def get_players_payloads2(self):
+        dict={0:{},1:{}}
+        for ws in self.players.values():
+            dict[ws.team]=ws.payload
+        return dict
     def on_player_joined(self):
         for identifier, ws in self.websockets.items():
             ws_send(ws,'connection','player_connected',None,self.get_players_payloads())
