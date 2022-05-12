@@ -7,14 +7,16 @@ import time
 def test2(ws):
     time.sleep(0.5)
     ws.send(json.dumps({'type': 'on_open'}))
-
+def t3(ws):
+    test2(ws)
+    ws.send(json.dumps({'games':main_menu.make_games_dict()}))
 
 class MenuConsumer(WebsocketConsumer):
 
     def connect(self):
         main_menu.handler(self)
         self.accept()
-        my_thread = threading.Thread(target=test2, args=(self,))
+        my_thread = threading.Thread(target=t3, args=(self,))
         my_thread.start()
     def disconnect(self,close_code):
         main_menu.websockets.remove(self)
