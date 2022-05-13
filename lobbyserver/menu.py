@@ -12,8 +12,6 @@ class Menu:
         for key, gamedicts in self.games.items():
             games[key] = {'started': [], 'notstarted': []}
             for id, game in gamedicts.items():
-                games[key]['started']=[]
-                games[key]['notstarted']=[]
                 if game.started:
                     games[key]['started'].append([id,game.get_players_payloads2()])
                 else:
