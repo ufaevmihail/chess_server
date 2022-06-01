@@ -42,18 +42,36 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
-
+#ALLOWED_HOSTS=['localhost:8000','localhost', '127.0.0.1']
+#ALLOWED_HOSTS=['*']
 CSRF_COOKIE_HTTPONLY = False
-
+'''LOGGING = {
+   'version': 1,
+   'disable_existing_loggers': False,
+   'handlers': {
+      'file': {
+         'level': 'DEBUG',
+         'class': 'logging.FileHandler',
+         'filename': '/tmp/debug.log',
+      },
+   },
+   'loggers': {
+      'django': {
+         'handlers': ['file'],
+         'level': 'DEBUG',
+         'propagate': True,
+      },
+   },
+}'''
 CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
 CORS_ALLOW_CREDENTIALS = True
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','django-insecure-j64lmj!22x9709@-8y2eawo%0(eyte6u-7hvu&7lpm_m6!z1jx')
-
+#SECRET_KEY = 'django-insecure-j64lmj!22x9709@-8y2eawo%0(eyte6u-7hvu&7lpm_m6!z1jx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
-
-ALLOWED_HOSTS = ['chess-server-app.herokuapp.com']
+#DEBUG=True
+ALLOWED_HOSTS = ['chess-server-app.herokuapp.com','localhost']
 
 #SESSION_COOKIE_AGE= #in seconds
 # Application definition

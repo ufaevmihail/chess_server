@@ -27,4 +27,4 @@ def make_req():
         requests.get('https://mychessapplication.herokuapp.com')
         requests.get('https://chess-server-app.herokuapp.com')
         time.sleep(1200)
-threading.Thread(target=make_req).start()
+#threading.Thread(target=make_req).start()
