@@ -5,7 +5,7 @@ from .menu import main_menu
 import threading
 import time
 def test2(ws):
-    time.sleep(0.5)
+    time.sleep(0.8)
     ws.send(json.dumps({'type': 'on_open'}))
 def t3(ws):
     test2(ws)

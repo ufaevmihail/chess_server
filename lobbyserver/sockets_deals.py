@@ -81,6 +81,7 @@ class Game:
                     handler(self,websocket, message)
 
     def on_disconnect(self,websocket):
+        #print(websocket.team)
         if websocket.team != None:
             self.players.pop(websocket.team)
             self.on_player_joined()
