@@ -10,18 +10,13 @@ class State:
         self.board = []
         self.turnList=[]
         self.endgame=False
-        self.start_fig_params = [["roof", 0, 0, 0], ["konb", 1, 0, 0], ["slon", 2, 0, 0], ["king", 4, 0, 0],
-                            ["ferz", 3, 0, 0],
-                            ["slon", 5, 0, 0], ["konb", 6, 0, 0], ["roof", 7, 0, 0],
-                            ["peshka", 0, 1, 0], ["peshka", 1, 1, 0], ["peshka", 2, 1, 0], ["peshka", 3, 1, 0],
-                            ["peshka", 4, 1, 0], ["peshka", 5, 1, 0], ["peshka", 6, 1, 0],
-                            ["peshka", 7, 1, 0],
-                            ["roof", 0, 7, 1], ["konb", 1, 7, 1], ["slon", 2, 7, 1], ["king", 4, 7, 1],
-                            ["ferz", 3, 7, 1],
-                            ["slon", 5, 7, 1], ["konb", 6, 7, 1], ["roof", 7, 7, 1],
-                            ["peshka", 0, 6, 1], ["peshka", 1, 6, 1], ["peshka", 2, 6, 1], ["peshka", 3, 6, 1],
-                            ["peshka", 4, 6, 1], ["peshka", 5, 6, 1], ["peshka", 6, 6, 1],
-                            ["peshka", 7, 6, 1]]
+        self.start_fig_params = \
+            [["roof",0,0,1],["konb",1,0,1],["slon",2,0,1],["king",4,0,1],["ferz",3,0,1],["slon",5,0,1],["konb",6,0,1],["roof",7,0,1],
+["peshka",0,1,1],["peshka",1,1,1],["peshka",2,1,1],["peshka",3,1,1],["peshka",4,1,1],["peshka",5,1,1],["peshka",6,1,1],
+["peshka",7,1,1],
+["roof",0,7,0],["konb",1,7,0],["slon",2,7,0],["king",4,7,0],["ferz",3,7,0],["slon",5,7,0],["konb",6,7,0],["roof",7,7,0],
+["peshka",0,6,0],["peshka",1,6,0],["peshka",2,6,0],["peshka",3,6,0],["peshka",4,6,0],["peshka",5,6,0],["peshka",6,6,0],
+["peshka",7,6,0]]
         self.kings= {}
         self.rooks=[[],[]]
         self.figures=[[],[]]
@@ -308,7 +303,7 @@ def noFiguresBetween(king,rook):
     return True
 
 def peshkarule(this):
-    v= 1 if this.team==0 else -1
+    v= 1 if this.team == 1 else -1
     if inBoard(this.px,this.py+v) and (not this.board[this.px][this.py+v] or this.board[this.px][this.py+v].type != 'figure'):
         this.cantogofields.append((this.px,this.py+v))
         if this.firstmove and (not this.board[this.px][this.py+2*v] or this.board[this.px][this.py+2*v].type != 'figure'):
