@@ -157,9 +157,9 @@ class Peshka(Figure):
         if abs(pred_py-self.py)==2:
             self.board[self.px][round((pred_py+self.py)/2)]=SledPeshki(self.px,round((pred_py+self.py)/2),self)
         if (self.team==1 and self.py==7) or (self.team==0 and self.py==0):
-            self.board.figures[self.team].remove(self)
+            self.state.figures[self.team].remove(self)
             self.board[self.px][self.py]=Figure("ferz", self.px, self.py, self.team,self.board,self.turnlist,self.state)
-            self.board.figures[self.team].append(self.board[self.px][self.py])
+            self.state.figures[self.team].append(self.board[self.px][self.py])
 
 
 class SledPeshki:
