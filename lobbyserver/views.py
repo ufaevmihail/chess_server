@@ -10,7 +10,6 @@ import json
 # Create your views here.
 @ensure_csrf_cookie
 def get_csrf_token(request):
-    print(request.COOKIES)
     csrf_token = get_token(request)
     #resp = JsonResponse({'csrfToken': request.COOKIES['XSRF-TOKEN']})
     resp = JsonResponse({'csrfToken': csrf_token})
@@ -38,11 +37,20 @@ def join_game(request,game_id):
         exists=True
     return JsonResponse({'exists':exists})
 
-
+@csrf_exempt
 @jwt_required
 def create_game_view(request,typeg='free'):
+    params = request.POST
+    try:
+        time1={'base':int(params['time1base']),'add':int(params['time1add'])}
+    except:
+        time1=None
+    try:
+        time2 = {'base': int(params['time2base']), 'add':int(params['time2add'])}
+    except:
+        time2 = None
     if typeg == 'free':
-        id=create_game()
+        id=create_game(time1,time2)
         return JsonResponse({'game_id':id})
     else:
         return HttpResponse(status=401)

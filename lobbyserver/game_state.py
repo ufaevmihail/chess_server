@@ -5,6 +5,7 @@ class State:
 
 
     def __init__(self,game):
+        self.timers={0:None,1:None}
         self.game=game
         self.turn=0
         self.board = []
@@ -52,6 +53,8 @@ class State:
         endx,endy=tuple(turn['endfield'])
         #if self.validate(startx,starty,endx,endy):
         self.board[startx][starty].make_move(endx,endy)
+        if self.turn != 0:
+            self.timer.start_ticking((self.turn+1)%2)
         self.check_matt_or_draw()
         for str in self.board:
             for field in str:

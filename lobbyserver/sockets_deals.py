@@ -11,14 +11,46 @@ from .menu import main_menu
 django.setup()
 
 
+class Timer:
+    #time1={'base':100,'add':5}
+    def __init__(self,game,time1=None,time2=None):
+        self.game=game
+        self.state=game.state
+        self.timers = game.state.timers
+        game.state.timers[0]=time1
+        game.state.timers[1]=time2
+
+        self.running=[False,False]
+
+    def start_ticking(self,team):
+        self.stop_ticking((team+1)%2)
+        #print(f"{self.timers[0]['base']} y {0}, {self.timers[1]['base']} y {1}")
+        if self.timers[team]:
+            self.timers[(team+1)%2]['base']+=self.timers[(team+1)%2]['add']
+            self.running[team]=True
+            thread=threading.Thread(target=ticking,args=(self,team))
+            thread.start()
+
+    def stop_ticking(self,team):
+        self.running[team]=False
 
 
-def create_game():
+def ticking(self,team):
+    while self.running[team]:
+        time.sleep(0.1)
+        self.timers[team]['base'] -= 0.1
+        if self.timers[team]['base'] <= 0:
+            self.state.endgame=True
+            self.game.start_closing()
+            self.stop_ticking(team)
+    #print(f'thread stopped {team}')
+
+def create_game(time1=None,time2=None):
     if not games:
         id=1
     else:
         id=max(games.keys())+1
-    games[id]=FreeGame(id)
+    games[id]=FreeGame(id,time1,time2)
     return id
 
 def joinGame(id):
@@ -38,6 +70,7 @@ class Game:
     players= {}
     websockets={}    #{userid:websocket}
     state=None
+    #timers={0:None,1:None}
     #state  #figurespos
             #turn
             #hodi
@@ -45,10 +78,13 @@ class Game:
     on_move = []
     on_chat_message = []
     events=[]
-    def __init__(self,id):
+    def __init__(self,id,time1=None,time2=None):
         self.state=State(self)
+        self.state.timer = Timer(self,time1,time2)
+        #self.state.timer = Timer(self)
         self.id=id
         self.started=False
+        #self.timer=Timer(self,{'base':100,'add':5},{'base':100,'add':5})
         #main_menu.update()
 
     def start_closing(self):
@@ -100,21 +136,30 @@ class Game:
         for identifier, ws in self.websockets.items():
             ws_send(ws,'connection','player_connected',None,self.get_players_payloads())
     def load_game(self, websocket):
+
         if self.id_in_players(websocket,0,0,['loadgame', 'ok', websocket.payload, {'team': 0,'figs':self.state.get_loaded_state()}]):
+            get_timers(self, websocket)
             return
         if self.id_in_players(websocket,1,1,['loadgame', 'ok', websocket.payload, {'team': 1,'figs':self.state.get_loaded_state()}]):
+            get_timers(self, websocket)
             return
         else:
             ws_send(websocket, 'loadgame', 'viewer',websocket.payload, {'figs':self.state.get_loaded_state()})
             ws_send(websocket, 'connection', 'player_connected', None, self.get_players_payloads())
+            get_timers(self, websocket)
+
+
     def new_game(self, websocket):
         if self.id_in_players(websocket,0,0,['startgame', 'ok', websocket.payload, {'team': 0}]):
+            get_timers(self, websocket)
             return
         if self.id_in_players(websocket,1,1,['startgame', 'ok', websocket.payload, {'team': 1}]):
+            get_timers(self, websocket)
             return
         else:
             ws_send(websocket, 'startgame', 'viewer', websocket.payload)
             ws_send(websocket, 'connection', 'player_connected', None, self.get_players_payloads())
+            get_timers(self, websocket)
 
     def id_in_players(self,websocket,id,team,data_to_send):
         if id not in self.players:
@@ -124,6 +169,9 @@ class Game:
             self.on_player_joined()
             main_menu.update()
             return True
+
+def get_timers(self,websocket,message=None):
+    ws_send(websocket, 'timers','get_timers',None, {'timers':self.state.timer.timers,'turn':self.state.turn})
 def chat_message(self,websocket,message):
     for identifier, ws in self.websockets.items():
      #   if identifier != id:
@@ -134,6 +182,7 @@ def move_done(self, websocket,message):
         return
     id = websocket.payload['account']['user']
     turn = {"startfield":message['startfield'],'endfield':message['endfield'],"swt":message["swt"]}
+
     if not self.state.validate(*turn['startfield'],*turn['endfield']):
         print('chtoto ne to')
         ws_send(websocket,'reload_page')
@@ -187,12 +236,13 @@ class FreeGame(Game):
     on_connection = [start_game]
     on_move = [move_done]
     on_chat_message=[chat_message]
-    def __init__(self,id):
-        super().__init__(id)
+    timers=[get_timers]
+    def __init__(self,id,time1=None,time2=None):
+        super().__init__(id,time1,time2)
         self.games=games
         self.websockets={}
         self.players={}
-        self.events = [("connection",self.on_connection),("move",self.on_move),('chat_mess',self.on_chat_message)]
+        self.events = [("connection",self.on_connection),("move",self.on_move),('chat_mess',self.on_chat_message),('timers',self.timers)]
 
 class gameDict(dict):
     def __setitem__(self,key,value):
