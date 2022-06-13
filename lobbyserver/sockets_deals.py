@@ -43,6 +43,9 @@ def ticking(self,team):
             self.state.endgame=True
             self.game.start_closing()
             self.stop_ticking(team)
+        if self.state.endgame:
+            self.stop_ticking(team)
+            self.stop_ticking((team+1)%2)
     #print(f'thread stopped {team}')
 
 def create_game(time1=None,time2=None):
