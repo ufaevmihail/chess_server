@@ -84,6 +84,9 @@ class State:
             figure.turnrule()
             enemyfigurescantattackourking(figure)
             if len(figure.cantogofields)!=0:
+                print(figure.name + 'here')
+                print((figure.px,figure.py))
+                print(figure.cantogofields)
                 checkmat=False
                 draw=False
                 break
@@ -232,7 +235,12 @@ def enemyfigurescantattackourking(this):
             figure.turnrule()
             if this.name=='king':
                 if fld in figure.cantogofields:
-                    this.cantogofields.remove(fld)
+                    try:
+                        this.cantogofields.remove(fld)
+                    except:
+                        print('wtf')
+                       # print(this.cantogofields)
+                       # print(fld)
                     #break не надо этого делать
             ourking = this.state.kings[this.team]
             if (ourking.px,ourking.py) in figure.cantogofields:
