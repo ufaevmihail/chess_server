@@ -225,6 +225,11 @@ def slonrule(obj):
                         obj.cantogofields.append((obj.px+p*i,obj.py+p*j))
                         break
                 p += 1
+def remove_all(arr,value):
+    arr.remove(value)
+    if value in arr:
+        print('aga')
+        arr.remove(value)
 def enemyfigurescantattackourking(this):
     this.state.board[this.px][this.py]=None
     cantogofieldscopy = this.cantogofields.copy()
@@ -236,7 +241,8 @@ def enemyfigurescantattackourking(this):
             if this.name=='king':
                 if fld in figure.cantogofields:
                     try:
-                        this.cantogofields.remove(fld)
+                        #this.cantogofields.remove(fld)
+                        remove_all(this.cantogofields,fld)
                     except:
                         print('wtf')
                        # print(this.cantogofields)
@@ -246,7 +252,10 @@ def enemyfigurescantattackourking(this):
             if (ourking.px,ourking.py) in figure.cantogofields:
                 this.state.kings[this.team].rokerate=False
                 if fld != (figure.px,figure.py) and this.name != 'king':
-                    this.cantogofields.remove(fld)
+                    try:
+                        remove_all(this.cantogofields,fld)
+                    except ValueError:
+                        print('wtf2')
                    # break
                 #figure.cantogofields=[]
             figure.cantogofields=[]
@@ -283,7 +292,8 @@ def kingrule(this):
                 field=this.board[this.px+i][this.py+j]
                 if not field or field.type != 'figure' or field.team != this.team:
                     this.cantogofields.append((this.px+i,this.py+j))
-    rokerate(this)
+    if this.team == this.state.turn % 2:
+        rokerate(this)
 def rokerate(king):
     if king.firstmove and king.state.kings[(king.team+1)%2].rokerate:
         #print(king.state.rooks[king.team].__dict__)
